@@ -1,0 +1,23 @@
+### Criar projeto
+POST http://localhost:8080/projetos
+Content-Type: application/json
+
+{
+  "nome": "Projeto Teste",
+  "descricao": "Descricao de teste"
+}
+
+### Listar projetos
+GET http://localhost:8080/projetos
+
+### Criar responsavel
+POST http://localhost:8080/responsaveis
+Content-Type: application/json
+
+{
+  "nome": "Fulano",
+  "email": "fulano@teste.com"
+}
+
+### Listar responsaveis
+GET http://localhost:8080/responsaveis
