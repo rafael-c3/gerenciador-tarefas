@@ -31,4 +31,20 @@ public class TarefaController {
                                @RequestParam(required = false) Long projetoId) {
         return tarefaService.listar(status, projetoId);
     }
+
+    @GetMapping("/{id}")
+    public Tarefa buscarPorId(@PathVariable Long id) {
+        return tarefaService.buscarPorId(id);
+    }
+
+    @PutMapping("/{id}")
+    public Tarefa atualizar(@PathVariable Long id, @RequestBody Tarefa tarefa) {
+        return tarefaService.atualizar(id, tarefa);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long id) {
+        tarefaService.remover(id);
+    }
 }

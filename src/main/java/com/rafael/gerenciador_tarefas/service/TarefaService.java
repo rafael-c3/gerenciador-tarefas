@@ -51,4 +51,41 @@ public class TarefaService {
         }
         return tarefaRepository.findAll();
     }
+
+    public Tarefa buscarPorId(Long id) {
+        return tarefaRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa nao encontrada: " + id));
+    }
+
+    public Tarefa atualizar(Long id, Tarefa dadosAtualizados) {
+        Tarefa tarefa = buscarPorId(id);
+
+        tarefa.setTitulo(dadosAtualizados.getTitulo());
+        tarefa.setDescricao(dadosAtualizados.getDescricao());
+        tarefa.setPrioridade(dadosAtualizados.getPrioridade());
+        tarefa.setPrazo(dadosAtualizados.getPrazo());
+
+        if (dadosAtualizados.getResponsavel() != null && dadosAtualizados.getResponsavel().getId() != null) {
+            Long responsavelId = dadosAtualizados.getResponsavel().getId();
+            Responsavel responsavel = responsavelRepository.findById(responsavelId)
+                    .orElseThrow(() -> new RecursoNaoEncontradoException("Responsavel nao encontrado: " + responsavelId));
+            tarefa.setResponsavel(responsavel);
+        }
+
+        boolean estaConcluindo = dadosAtualizados.getStatus() == Status.CONCLUIDA
+                && tarefa.getStatus() != Status.CONCLUIDA;
+
+        tarefa.setStatus(dadosAtualizados.getStatus());
+
+        if (estaConcluindo) {
+            tarefa.setConcluidaEm(java.time.LocalDateTime.now());
+        }
+
+        return tarefaRepository.save(tarefa);
+    }
+
+    public void remover(Long id) {
+        Tarefa tarefa = buscarPorId(id);
+        tarefaRepository.delete(tarefa);
+    }
 }
