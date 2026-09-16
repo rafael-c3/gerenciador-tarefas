@@ -21,3 +21,24 @@ Content-Type: application/json
 
 ### Listar responsaveis
 GET http://localhost:8080/responsaveis
+
+### Criar tarefa
+POST http://localhost:8080/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Revisar contrato",
+  "descricao": "Conferir clausulas de reajuste",
+  "prioridade": "ALTA",
+  "prazo": "2026-09-30",
+  "projeto": { "id": 1 }
+}
+
+### Listar todas as tarefas
+GET http://localhost:8080/tarefas
+
+### Filtrar por status
+GET http://localhost:8080/tarefas?status=NOVA
+
+### Filtrar por projeto
+GET http://localhost:8080/tarefas?projetoId=1
