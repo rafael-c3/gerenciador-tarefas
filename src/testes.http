@@ -1,4 +1,4 @@
-### Criar projeto
+### 1. Criar um projeto
 POST http://localhost:8080/projetos
 Content-Type: application/json
 
@@ -7,62 +7,90 @@ Content-Type: application/json
   "descricao": "Descricao de teste"
 }
 
-### Listar projetos
-GET http://localhost:8080/projetos
-
-### Criar responsavel
+### 2. Criar um responsável
 POST http://localhost:8080/responsaveis
 Content-Type: application/json
 
 {
-  "nome": "Fulano",
+  "nome": "Fulano de Tal",
   "email": "fulano@teste.com"
 }
 
-### Listar responsaveis
-GET http://localhost:8080/responsaveis
-
-
-### Criar tarefa
+### 3a. Criar tarefa 1 (prioridade ALTA)
 POST http://localhost:8080/tarefas
 Content-Type: application/json
 
 {
-  "titulo": "Revisar contrato",
+  "titulo": "Revisar contrato do fornecedor",
   "descricao": "Conferir clausulas de reajuste",
   "prioridade": "ALTA",
   "prazo": "2026-09-30",
   "projeto": { "id": 1 }
 }
 
-### Listar todas as tarefas
-GET http://localhost:8080/tarefas
-
-### Filtrar por status
-GET http://localhost:8080/tarefas?status=NOVA
-
-### Filtrar por projeto
-GET http://localhost:8080/tarefas?projetoId=1
-
-
-### Buscar tarefa por id
-GET http://localhost:8080/tarefas/1
-
-### Atualizar tarefa
-PUT http://localhost:8080/tarefas/1
+### 3b. Criar tarefa 2 (prioridade MEDIA)
+POST http://localhost:8080/tarefas
 Content-Type: application/json
 
 {
-  "titulo": "Revisar contrato",
+  "titulo": "Atualizar planilha de custos",
+  "descricao": "Consolidar gastos do mes",
+  "prioridade": "MEDIA",
+  "prazo": "2026-10-05",
+  "projeto": { "id": 1 }
+}
+
+### 3c. Criar tarefa 3 (prioridade BAIXA)
+POST http://localhost:8080/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Organizar arquivos antigos",
+  "descricao": "Arquivar documentos de 2025",
+  "prioridade": "BAIXA",
+  "prazo": "2026-10-15",
+  "projeto": { "id": 1 }
+}
+
+### 4. Listar tarefas - conferir que as 3 aparecem com status NOVA
+GET http://localhost:8080/tarefas
+
+### 5. Filtrar por status - conferir que o filtro reduz o resultado
+GET http://localhost:8080/tarefas?status=NOVA
+
+### 6. Consultar uma tarefa pelo id - ajuste conforme o id real
+GET http://localhost:8080/tarefas/2
+
+### 7. Atualizar tarefa mudando status para CONCLUIDA
+PUT http://localhost:8080/tarefas/2
+Content-Type: application/json
+
+{
+  "titulo": "Revisar contrato do fornecedor",
   "descricao": "Conferir clausulas de reajuste",
   "status": "CONCLUIDA",
   "prioridade": "ALTA",
-  "prazo": "2026-09-30",
+  "prazo": "2026-09-30"
+}
+
+### 8. Atribuir um responsável a uma tarefa
+PUT http://localhost:8080/tarefas/2
+Content-Type: application/json
+
+{
+  "titulo": "Atualizar planilha de custos",
+  "descricao": "Consolidar gastos do mes",
+  "status": "NOVA",
+  "prioridade": "MEDIA",
+  "prazo": "2026-10-05",
   "responsavel": { "id": 1 }
 }
 
-### Remover tarefa
-DELETE http://localhost:8080/tarefas/1
+### 8b. Conferir que o responsável foi atribuído
+GET http://localhost:8080/tarefas/2
 
-### Buscar tarefa removida
-GET http://localhost:8080/tarefas/1
+### 9. Remover uma tarefa
+DELETE http://localhost:8080/tarefas/3
+
+### 10. Consultar a tarefa removida
+GET http://localhost:8080/tarefas/3
